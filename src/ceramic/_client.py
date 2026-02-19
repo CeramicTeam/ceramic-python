@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from typing import Any, Mapping
-from typing_extensions import Self, override
+from typing_extensions import Self, Literal, override
 
 import httpx
 
@@ -21,7 +21,6 @@ from ._types import (
     Transport,
     ProxiesTypes,
     RequestOptions,
-    omit,
     not_given,
 )
 from ._utils import (
@@ -188,9 +187,10 @@ class Ceramic(SyncAPIClient):
     def search(
         self,
         *,
-        query: str,
-        max_description_length: int | Omit = omit,
-        max_results: int | Omit = omit,
+        id: int,
+        jsonrpc: Literal["2.0"],
+        method: Literal["query"],
+        params: client_search_params.Params,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -198,15 +198,16 @@ class Ceramic(SyncAPIClient):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SearchResponse:
-        """
-        Search the web and retrieve relevant content.
+        """Search the web and retrieve relevant content.
+
+        Uses JSON-RPC 2.0 format.
 
         Args:
-          query: The search query in natural language.
+          id: A unique identifier for the request.
 
-          max_description_length: Maximum character length for result descriptions.
+          jsonrpc: JSON-RPC version. Must be "2.0".
 
-          max_results: Maximum number of results to return.
+          method: The method to call. Use "query" for search.
 
           extra_headers: Send extra headers
 
@@ -220,9 +221,10 @@ class Ceramic(SyncAPIClient):
             "/",
             body=maybe_transform(
                 {
-                    "query": query,
-                    "max_description_length": max_description_length,
-                    "max_results": max_results,
+                    "id": id,
+                    "jsonrpc": jsonrpc,
+                    "method": method,
+                    "params": params,
                 },
                 client_search_params.ClientSearchParams,
             ),
@@ -403,9 +405,10 @@ class AsyncCeramic(AsyncAPIClient):
     async def search(
         self,
         *,
-        query: str,
-        max_description_length: int | Omit = omit,
-        max_results: int | Omit = omit,
+        id: int,
+        jsonrpc: Literal["2.0"],
+        method: Literal["query"],
+        params: client_search_params.Params,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -413,15 +416,16 @@ class AsyncCeramic(AsyncAPIClient):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SearchResponse:
-        """
-        Search the web and retrieve relevant content.
+        """Search the web and retrieve relevant content.
+
+        Uses JSON-RPC 2.0 format.
 
         Args:
-          query: The search query in natural language.
+          id: A unique identifier for the request.
 
-          max_description_length: Maximum character length for result descriptions.
+          jsonrpc: JSON-RPC version. Must be "2.0".
 
-          max_results: Maximum number of results to return.
+          method: The method to call. Use "query" for search.
 
           extra_headers: Send extra headers
 
@@ -435,9 +439,10 @@ class AsyncCeramic(AsyncAPIClient):
             "/",
             body=await async_maybe_transform(
                 {
-                    "query": query,
-                    "max_description_length": max_description_length,
-                    "max_results": max_results,
+                    "id": id,
+                    "jsonrpc": jsonrpc,
+                    "method": method,
+                    "params": params,
                 },
                 client_search_params.ClientSearchParams,
             ),

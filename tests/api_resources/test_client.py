@@ -21,7 +21,10 @@ class TestClient:
     @parametrize
     def test_method_search(self, client: Ceramic) -> None:
         client_ = client.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         )
         assert_matches_type(SearchResponse, client_, path=["response"])
 
@@ -29,9 +32,14 @@ class TestClient:
     @parametrize
     def test_method_search_with_all_params(self, client: Ceramic) -> None:
         client_ = client.search(
-            query="California rental laws",
-            max_description_length=1,
-            max_results=1,
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={
+                "query": "California rental laws",
+                "max_description_length": 1,
+                "max_results": 1,
+            },
         )
         assert_matches_type(SearchResponse, client_, path=["response"])
 
@@ -39,7 +47,10 @@ class TestClient:
     @parametrize
     def test_raw_response_search(self, client: Ceramic) -> None:
         response = client.with_raw_response.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         )
 
         assert response.is_closed is True
@@ -51,7 +62,10 @@ class TestClient:
     @parametrize
     def test_streaming_response_search(self, client: Ceramic) -> None:
         with client.with_streaming_response.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -71,7 +85,10 @@ class TestAsyncClient:
     @parametrize
     async def test_method_search(self, async_client: AsyncCeramic) -> None:
         client = await async_client.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         )
         assert_matches_type(SearchResponse, client, path=["response"])
 
@@ -79,9 +96,14 @@ class TestAsyncClient:
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncCeramic) -> None:
         client = await async_client.search(
-            query="California rental laws",
-            max_description_length=1,
-            max_results=1,
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={
+                "query": "California rental laws",
+                "max_description_length": 1,
+                "max_results": 1,
+            },
         )
         assert_matches_type(SearchResponse, client, path=["response"])
 
@@ -89,7 +111,10 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncCeramic) -> None:
         response = await async_client.with_raw_response.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         )
 
         assert response.is_closed is True
@@ -101,7 +126,10 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncCeramic) -> None:
         async with async_client.with_streaming_response.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

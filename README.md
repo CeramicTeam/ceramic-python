@@ -36,9 +36,12 @@ client = Ceramic(
 )
 
 response = client.search(
-    query="California rental laws",
+    id=1,
+    jsonrpc="2.0",
+    method="query",
+    params={"query": "California rental laws"},
 )
-print(response.request_id)
+print(response.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -62,9 +65,12 @@ client = AsyncCeramic(
 
 async def main() -> None:
     response = await client.search(
-        query="California rental laws",
+        id=1,
+        jsonrpc="2.0",
+        method="query",
+        params={"query": "California rental laws"},
     )
-    print(response.request_id)
+    print(response.id)
 
 
 asyncio.run(main())
@@ -98,9 +104,12 @@ async def main() -> None:
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.search(
-            query="California rental laws",
+            id=1,
+            jsonrpc="2.0",
+            method="query",
+            params={"query": "California rental laws"},
         )
-        print(response.request_id)
+        print(response.id)
 
 
 asyncio.run(main())
@@ -114,6 +123,24 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from ceramic import Ceramic
+
+client = Ceramic()
+
+response = client.search(
+    id=1,
+    jsonrpc="2.0",
+    method="query",
+    params={"query": "California rental laws"},
+)
+print(response.params)
+```
 
 ## Handling errors
 
@@ -132,7 +159,10 @@ client = Ceramic()
 
 try:
     client.search(
-        query="California rental laws",
+        id=1,
+        jsonrpc="2.0",
+        method="query",
+        params={"query": "California rental laws"},
     )
 except ceramic.APIConnectionError as e:
     print("The server could not be reached")
@@ -177,7 +207,10 @@ client = Ceramic(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).search(
-    query="California rental laws",
+    id=1,
+    jsonrpc="2.0",
+    method="query",
+    params={"query": "California rental laws"},
 )
 ```
 
@@ -202,7 +235,10 @@ client = Ceramic(
 
 # Override per-request:
 client.with_options(timeout=5.0).search(
-    query="California rental laws",
+    id=1,
+    jsonrpc="2.0",
+    method="query",
+    params={"query": "California rental laws"},
 )
 ```
 
@@ -245,12 +281,17 @@ from ceramic import Ceramic
 
 client = Ceramic()
 response = client.with_raw_response.search(
-    query="California rental laws",
+    id=1,
+    jsonrpc="2.0",
+    method="query",
+    params={
+        "query": "California rental laws"
+    },
 )
 print(response.headers.get('X-My-Header'))
 
 client = response.parse()  # get the object that `search()` would have returned
-print(client.request_id)
+print(client.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/ceramic-python/tree/main/src/ceramic/_response.py) object.
@@ -265,7 +306,10 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.with_streaming_response.search(
-    query="California rental laws",
+    id=1,
+    jsonrpc="2.0",
+    method="query",
+    params={"query": "California rental laws"},
 ) as response:
     print(response.headers.get("X-My-Header"))
 
