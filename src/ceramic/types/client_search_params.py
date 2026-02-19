@@ -2,27 +2,14 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["ClientSearchParams", "Params"]
+__all__ = ["ClientSearchParams"]
 
 
 class ClientSearchParams(TypedDict, total=False):
-    id: Required[int]
-    """A unique identifier for the request."""
-
-    jsonrpc: Required[Literal["2.0"]]
-    """JSON-RPC version. Must be "2.0"."""
-
-    method: Required[Literal["query"]]
-    """The method to call. Use "query" for search."""
-
-    params: Required[Params]
-
-
-class Params(TypedDict, total=False):
     query: Required[str]
     """The search query in natural language."""
 

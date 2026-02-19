@@ -852,9 +852,7 @@ class TestCeramic:
         respx_mock.post("/").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.with_streaming_response.search(
-                id=1, jsonrpc="2.0", method="query", params={"query": "California rental laws"}
-            ).__enter__()
+            client.with_streaming_response.search(query="California rental laws").__enter__()
 
         assert _get_open_connections(client) == 0
 
@@ -864,9 +862,7 @@ class TestCeramic:
         respx_mock.post("/").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.with_streaming_response.search(
-                id=1, jsonrpc="2.0", method="query", params={"query": "California rental laws"}
-            ).__enter__()
+            client.with_streaming_response.search(query="California rental laws").__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -895,9 +891,7 @@ class TestCeramic:
 
         respx_mock.post("/").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.search(
-            id=1, jsonrpc="2.0", method="query", params={"query": "California rental laws"}
-        )
+        response = client.with_raw_response.search(query="California rental laws")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -922,11 +916,7 @@ class TestCeramic:
         respx_mock.post("/").mock(side_effect=retry_handler)
 
         response = client.with_raw_response.search(
-            id=1,
-            jsonrpc="2.0",
-            method="query",
-            params={"query": "California rental laws"},
-            extra_headers={"x-stainless-retry-count": Omit()},
+            query="California rental laws", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -951,11 +941,7 @@ class TestCeramic:
         respx_mock.post("/").mock(side_effect=retry_handler)
 
         response = client.with_raw_response.search(
-            id=1,
-            jsonrpc="2.0",
-            method="query",
-            params={"query": "California rental laws"},
-            extra_headers={"x-stainless-retry-count": "42"},
+            query="California rental laws", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
@@ -1770,9 +1756,7 @@ class TestAsyncCeramic:
         respx_mock.post("/").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.with_streaming_response.search(
-                id=1, jsonrpc="2.0", method="query", params={"query": "California rental laws"}
-            ).__aenter__()
+            await async_client.with_streaming_response.search(query="California rental laws").__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
@@ -1782,9 +1766,7 @@ class TestAsyncCeramic:
         respx_mock.post("/").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.with_streaming_response.search(
-                id=1, jsonrpc="2.0", method="query", params={"query": "California rental laws"}
-            ).__aenter__()
+            await async_client.with_streaming_response.search(query="California rental laws").__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1813,9 +1795,7 @@ class TestAsyncCeramic:
 
         respx_mock.post("/").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.search(
-            id=1, jsonrpc="2.0", method="query", params={"query": "California rental laws"}
-        )
+        response = await client.with_raw_response.search(query="California rental laws")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1840,11 +1820,7 @@ class TestAsyncCeramic:
         respx_mock.post("/").mock(side_effect=retry_handler)
 
         response = await client.with_raw_response.search(
-            id=1,
-            jsonrpc="2.0",
-            method="query",
-            params={"query": "California rental laws"},
-            extra_headers={"x-stainless-retry-count": Omit()},
+            query="California rental laws", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1869,11 +1845,7 @@ class TestAsyncCeramic:
         respx_mock.post("/").mock(side_effect=retry_handler)
 
         response = await client.with_raw_response.search(
-            id=1,
-            jsonrpc="2.0",
-            method="query",
-            params={"query": "California rental laws"},
-            extra_headers={"x-stainless-retry-count": "42"},
+            query="California rental laws", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"

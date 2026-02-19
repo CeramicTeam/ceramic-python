@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from typing import Any, Mapping
-from typing_extensions import Self, Literal, override
+from typing_extensions import Self, override
 
 import httpx
 
@@ -21,6 +21,7 @@ from ._types import (
     Transport,
     ProxiesTypes,
     RequestOptions,
+    omit,
     not_given,
 )
 from ._utils import (
@@ -187,10 +188,9 @@ class Ceramic(SyncAPIClient):
     def search(
         self,
         *,
-        id: int,
-        jsonrpc: Literal["2.0"],
-        method: Literal["query"],
-        params: client_search_params.Params,
+        query: str,
+        max_description_length: int | Omit = omit,
+        max_results: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -198,16 +198,15 @@ class Ceramic(SyncAPIClient):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SearchResponse:
-        """Search the web and retrieve relevant content.
-
-        Uses JSON-RPC 2.0 format.
+        """
+        Search the web and retrieve relevant content.
 
         Args:
-          id: A unique identifier for the request.
+          query: The search query in natural language.
 
-          jsonrpc: JSON-RPC version. Must be "2.0".
+          max_description_length: Maximum character length for result descriptions.
 
-          method: The method to call. Use "query" for search.
+          max_results: Maximum number of results to return.
 
           extra_headers: Send extra headers
 
@@ -221,10 +220,9 @@ class Ceramic(SyncAPIClient):
             "/",
             body=maybe_transform(
                 {
-                    "id": id,
-                    "jsonrpc": jsonrpc,
-                    "method": method,
-                    "params": params,
+                    "query": query,
+                    "max_description_length": max_description_length,
+                    "max_results": max_results,
                 },
                 client_search_params.ClientSearchParams,
             ),
@@ -405,10 +403,9 @@ class AsyncCeramic(AsyncAPIClient):
     async def search(
         self,
         *,
-        id: int,
-        jsonrpc: Literal["2.0"],
-        method: Literal["query"],
-        params: client_search_params.Params,
+        query: str,
+        max_description_length: int | Omit = omit,
+        max_results: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -416,16 +413,15 @@ class AsyncCeramic(AsyncAPIClient):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SearchResponse:
-        """Search the web and retrieve relevant content.
-
-        Uses JSON-RPC 2.0 format.
+        """
+        Search the web and retrieve relevant content.
 
         Args:
-          id: A unique identifier for the request.
+          query: The search query in natural language.
 
-          jsonrpc: JSON-RPC version. Must be "2.0".
+          max_description_length: Maximum character length for result descriptions.
 
-          method: The method to call. Use "query" for search.
+          max_results: Maximum number of results to return.
 
           extra_headers: Send extra headers
 
@@ -439,10 +435,9 @@ class AsyncCeramic(AsyncAPIClient):
             "/",
             body=await async_maybe_transform(
                 {
-                    "id": id,
-                    "jsonrpc": jsonrpc,
-                    "method": method,
-                    "params": params,
+                    "query": query,
+                    "max_description_length": max_description_length,
+                    "max_results": max_results,
                 },
                 client_search_params.ClientSearchParams,
             ),

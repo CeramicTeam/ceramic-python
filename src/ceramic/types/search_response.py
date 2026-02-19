@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import List
 
 from pydantic import Field as FieldInfo
 
@@ -10,39 +10,36 @@ __all__ = ["SearchResponse", "Result", "ResultResult", "ResultSearchMetadata"]
 
 
 class ResultResult(BaseModel):
-    description: Optional[str] = None
+    description: str
     """A text snippet from the page content."""
 
-    score: Optional[float] = None
+    score: float
     """Relevance score for the result."""
 
-    title: Optional[str] = None
+    title: str
     """The title of the web page."""
 
-    url: Optional[str] = None
+    url: str
     """The URL of the web page."""
 
 
 class ResultSearchMetadata(BaseModel):
-    execution_time: Optional[float] = FieldInfo(alias="executionTime", default=None)
+    execution_time: float = FieldInfo(alias="executionTime")
     """Time taken to execute the search in seconds."""
 
 
 class Result(BaseModel):
-    results: Optional[List[ResultResult]] = None
+    results: List[ResultResult]
     """Array of search results."""
 
-    search_metadata: Optional[ResultSearchMetadata] = FieldInfo(alias="searchMetadata", default=None)
+    search_metadata: ResultSearchMetadata = FieldInfo(alias="searchMetadata")
 
-    total_results: Optional[int] = FieldInfo(alias="totalResults", default=None)
+    total_results: int = FieldInfo(alias="totalResults")
     """Total number of results returned."""
 
 
 class SearchResponse(BaseModel):
-    id: Optional[int] = None
-    """The request ID you provided."""
+    request_id: str = FieldInfo(alias="requestId")
+    """Server-generated request identifier (often a UUID)."""
 
-    jsonrpc: Optional[str] = None
-    """JSON-RPC version. Always "2.0"."""
-
-    result: Optional[Result] = None
+    result: Result
