@@ -17,7 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestClient:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_search(self, client: Ceramic) -> None:
         client_ = client.search(
@@ -25,7 +25,7 @@ class TestClient:
         )
         assert_matches_type(SearchResponse, client_, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_search_with_all_params(self, client: Ceramic) -> None:
         client_ = client.search(
@@ -35,7 +35,7 @@ class TestClient:
         )
         assert_matches_type(SearchResponse, client_, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_search(self, client: Ceramic) -> None:
         response = client.with_raw_response.search(
@@ -47,7 +47,7 @@ class TestClient:
         client_ = response.parse()
         assert_matches_type(SearchResponse, client_, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_search(self, client: Ceramic) -> None:
         with client.with_streaming_response.search(
@@ -67,7 +67,7 @@ class TestAsyncClient:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_search(self, async_client: AsyncCeramic) -> None:
         client = await async_client.search(
@@ -75,7 +75,7 @@ class TestAsyncClient:
         )
         assert_matches_type(SearchResponse, client, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncCeramic) -> None:
         client = await async_client.search(
@@ -85,7 +85,7 @@ class TestAsyncClient:
         )
         assert_matches_type(SearchResponse, client, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncCeramic) -> None:
         response = await async_client.with_raw_response.search(
@@ -97,7 +97,7 @@ class TestAsyncClient:
         client = await response.parse()
         assert_matches_type(SearchResponse, client, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncCeramic) -> None:
         async with async_client.with_streaming_response.search(
