@@ -7,17 +7,17 @@ from ._proxy import LazyProxy
 
 
 class ResourcesProxy(LazyProxy[Any]):
-    """A proxy for the `ceramic.resources` module.
+    """A proxy for the `ceramic_ai.resources` module.
 
-    This is used so that we can lazily import `ceramic.resources` only when
-    needed *and* so that users can just import `ceramic` and reference `ceramic.resources`
+    This is used so that we can lazily import `ceramic_ai.resources` only when
+    needed *and* so that users can just import `ceramic_ai` and reference `ceramic_ai.resources`
     """
 
     @override
     def __load__(self) -> Any:
         import importlib
 
-        mod = importlib.import_module("ceramic.resources")
+        mod = importlib.import_module("ceramic_ai.resources")
         return mod
 
 

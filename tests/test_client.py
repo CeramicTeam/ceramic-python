@@ -19,12 +19,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from ceramic import Ceramic, AsyncCeramic, APIResponseValidationError
-from ceramic._types import Omit
-from ceramic._utils import asyncify
-from ceramic._models import BaseModel, FinalRequestOptions
-from ceramic._exceptions import CeramicError, APIStatusError, APITimeoutError, APIResponseValidationError
-from ceramic._base_client import (
+from ceramic_ai import Ceramic, AsyncCeramic, APIResponseValidationError
+from ceramic_ai._types import Omit
+from ceramic_ai._utils import asyncify
+from ceramic_ai._models import BaseModel, FinalRequestOptions
+from ceramic_ai._exceptions import CeramicError, APIStatusError, APITimeoutError, APIResponseValidationError
+from ceramic_ai._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -286,10 +286,10 @@ class TestCeramic:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "ceramic/_legacy_response.py",
-                        "ceramic/_response.py",
+                        "ceramic_ai/_legacy_response.py",
+                        "ceramic_ai/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "ceramic/_compat.py",
+                        "ceramic_ai/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -846,7 +846,7 @@ class TestCeramic:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Ceramic) -> None:
         respx_mock.post("/").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -856,7 +856,7 @@ class TestCeramic:
 
         assert _get_open_connections(client) == 0
 
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Ceramic) -> None:
         respx_mock.post("/").mock(return_value=httpx.Response(500))
@@ -866,7 +866,7 @@ class TestCeramic:
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -897,7 +897,7 @@ class TestCeramic:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
         self, client: Ceramic, failures_before_success: int, respx_mock: MockRouter
@@ -922,7 +922,7 @@ class TestCeramic:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: Ceramic, failures_before_success: int, respx_mock: MockRouter
@@ -1169,10 +1169,10 @@ class TestAsyncCeramic:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "ceramic/_legacy_response.py",
-                        "ceramic/_response.py",
+                        "ceramic_ai/_legacy_response.py",
+                        "ceramic_ai/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "ceramic/_compat.py",
+                        "ceramic_ai/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1748,7 +1748,7 @@ class TestAsyncCeramic:
         calculated = async_client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncCeramic
@@ -1760,7 +1760,7 @@ class TestAsyncCeramic:
 
         assert _get_open_connections(async_client) == 0
 
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncCeramic) -> None:
         respx_mock.post("/").mock(return_value=httpx.Response(500))
@@ -1770,7 +1770,7 @@ class TestAsyncCeramic:
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
@@ -1801,7 +1801,7 @@ class TestAsyncCeramic:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_omit_retry_count_header(
         self, async_client: AsyncCeramic, failures_before_success: int, respx_mock: MockRouter
@@ -1826,7 +1826,7 @@ class TestAsyncCeramic:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("ceramic._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_overwrite_retry_count_header(
         self, async_client: AsyncCeramic, failures_before_success: int, respx_mock: MockRouter

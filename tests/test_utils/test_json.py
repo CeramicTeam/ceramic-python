@@ -5,8 +5,8 @@ from typing import Union
 
 import pydantic
 
-from ceramic import _compat
-from ceramic._utils._json import openapi_dumps
+from ceramic_ai import _compat
+from ceramic_ai._utils._json import openapi_dumps
 
 
 class TestOpenapiDumps:

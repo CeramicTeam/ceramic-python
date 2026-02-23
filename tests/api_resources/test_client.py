@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from ceramic import Ceramic, AsyncCeramic
+from ceramic_ai import Ceramic, AsyncCeramic
 from tests.utils import assert_matches_type
-from ceramic.types import SearchResponse
+from ceramic_ai.types import SearchResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 

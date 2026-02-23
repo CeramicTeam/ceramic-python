@@ -8,7 +8,7 @@ from datetime import date, datetime, timezone, timedelta
 
 import pytest
 
-from ceramic._utils import parse_date, parse_datetime
+from ceramic_ai._utils import parse_date, parse_datetime
 
 
 def create_tz(minutes: int) -> timezone:

@@ -1,5 +1,5 @@
 [project]
-name = "ceramic"
+name = "ceramic-ai"
 version = "0.0.1"
 description = "The official Python library for the ceramic API"
 dynamic = ["readme"]
@@ -37,8 +37,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/stainless-sdks/ceramic-python"
-Repository = "https://github.com/stainless-sdks/ceramic-python"
+Homepage = "https://github.com/CeramicTeam/ceramic-python"
+Repository = "https://github.com/CeramicTeam/ceramic-python"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
@@ -86,7 +86,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/ceramic"]
+packages = ["src/ceramic_ai"]
 
 [tool.hatch.build.targets.sdist]
 # Basically everything except hidden files/directories (such as .github, .devcontainers, .python-version, etc)
@@ -112,7 +112,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/stainless-sdks/ceramic-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/CeramicTeam/ceramic-python/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -154,7 +154,7 @@ show_error_codes = true
 #
 # We also exclude our `tests` as mypy doesn't always infer
 # types correctly and Pyright will still catch any type errors.
-exclude = ['src/ceramic/_files.py', '_dev/.*.py', 'tests/.*']
+exclude = ['src/ceramic_ai/_files.py', '_dev/.*.py', 'tests/.*']
 
 strict_equality = true
 implicit_reexport = true
@@ -246,7 +246,7 @@ length-sort = true
 length-sort-straight = true
 combine-as-imports = true
 extra-standard-library = ["typing_extensions"]
-known-first-party = ["ceramic", "tests"]
+known-first-party = ["ceramic_ai", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "bin/**.py" = ["T201", "T203"]

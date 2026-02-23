@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from ceramic._types import Base64FileInput, omit, not_given
-from ceramic._utils import (
+from ceramic_ai._types import Base64FileInput, omit, not_given
+from ceramic_ai._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from ceramic._compat import PYDANTIC_V1
-from ceramic._models import BaseModel
+from ceramic_ai._compat import PYDANTIC_V1
+from ceramic_ai._models import BaseModel
 
 _T = TypeVar("_T")
 

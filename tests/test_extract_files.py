@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from ceramic._types import FileTypes
-from ceramic._utils import extract_files
+from ceramic_ai._types import FileTypes
+from ceramic_ai._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:
