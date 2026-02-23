@@ -1,7 +1,7 @@
 # Ceramic Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/ceramic-ai.svg?label=pypi%20(stable))](https://pypi.org/project/ceramic-ai/)
+[![PyPI version](https://img.shields.io/pypi/v/ceramic_ai.svg?label=pypi%20(stable))](https://pypi.org/project/ceramic_ai/)
 
 The Ceramic Python library provides convenient access to the Ceramic REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
@@ -17,7 +17,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```sh
 # install from PyPI
-pip install ceramic-ai
+pip install ceramic_ai
 ```
 
 ## Usage
@@ -77,7 +77,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install ceramic-ai[aiohttp]
+pip install ceramic_ai[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:

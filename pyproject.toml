@@ -1,5 +1,5 @@
 [project]
-name = "ceramic-ai"
+name = "ceramic_ai"
 version = "0.0.1"
 description = "The official Python library for the ceramic API"
 dynamic = ["readme"]
