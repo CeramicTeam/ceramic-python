@@ -81,12 +81,12 @@ _setup_logging()
 # Update the __module__ attribute for exported symbols so that
 # error messages point to this module instead of the module
 # it was originally defined in, e.g.
-# ceramic._exceptions.NotFoundError -> ceramic.NotFoundError
+# ceramic_ai._exceptions.NotFoundError -> ceramic_ai.NotFoundError
 __locals = locals()
 for __name in __all__:
     if not __name.startswith("__"):
         try:
-            __locals[__name].__module__ = "ceramic"
+            __locals[__name].__module__ = "ceramic_ai"
         except (TypeError, AttributeError):
             # Some of our exported symbols are builtins which we can't set attributes for.
             pass

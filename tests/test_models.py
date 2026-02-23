@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from ceramic._utils import PropertyInfo
-from ceramic._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
-from ceramic._models import DISCRIMINATOR_CACHE, BaseModel, construct_type
+from ceramic_ai._utils import PropertyInfo
+from ceramic_ai._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
+from ceramic_ai._models import DISCRIMINATOR_CACHE, BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

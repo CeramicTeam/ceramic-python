@@ -8,8 +8,8 @@ from typing import Any, TypeVar, Iterator, Sequence, cast
 from datetime import date, datetime
 from typing_extensions import Literal, get_args, get_origin, assert_type
 
-from ceramic._types import Omit, NoneType
-from ceramic._utils import (
+from ceramic_ai._types import Omit, NoneType
+from ceramic_ai._utils import (
     is_dict,
     is_list,
     is_list_type,
@@ -19,8 +19,8 @@ from ceramic._utils import (
     is_annotated_type,
     is_type_alias_type,
 )
-from ceramic._compat import PYDANTIC_V1, field_outer_type, get_model_fields
-from ceramic._models import BaseModel
+from ceramic_ai._compat import PYDANTIC_V1, field_outer_type, get_model_fields
+from ceramic_ai._models import BaseModel
 
 BaseModelT = TypeVar("BaseModelT", bound=BaseModel)
 

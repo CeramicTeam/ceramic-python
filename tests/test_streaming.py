@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from ceramic import Ceramic, AsyncCeramic
-from ceramic._streaming import Stream, AsyncStream, ServerSentEvent
+from ceramic_ai import Ceramic, AsyncCeramic
+from ceramic_ai._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

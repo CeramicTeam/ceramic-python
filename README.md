@@ -1,7 +1,7 @@
 # Ceramic Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/ceramic.svg?label=pypi%20(stable))](https://pypi.org/project/ceramic/)
+[![PyPI version](https://img.shields.io/pypi/v/ceramic-ai.svg?label=pypi%20(stable))](https://pypi.org/project/ceramic-ai/)
 
 The Ceramic Python library provides convenient access to the Ceramic REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
@@ -16,12 +16,9 @@ The full API of this library can be found in [api.md](api.md).
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/ceramic-python.git
+# install from PyPI
+pip install ceramic-ai
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install ceramic`
 
 ## Usage
 
@@ -29,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from ceramic import Ceramic
+from ceramic_ai import Ceramic
 
 client = Ceramic(
     api_key=os.environ.get("CERAMIC_API_KEY"),  # This is the default and can be omitted
@@ -53,7 +50,7 @@ Simply import `AsyncCeramic` instead of `Ceramic` and use `await` with each API 
 ```python
 import os
 import asyncio
-from ceramic import AsyncCeramic
+from ceramic_ai import AsyncCeramic
 
 client = AsyncCeramic(
     api_key=os.environ.get("CERAMIC_API_KEY"),  # This is the default and can be omitted
@@ -79,8 +76,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from this staging repo
-pip install 'ceramic[aiohttp] @ git+ssh://git@github.com/stainless-sdks/ceramic-python.git'
+# install from PyPI
+pip install ceramic-ai[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -88,8 +85,8 @@ Then you can enable it by instantiating the client with `http_client=DefaultAioH
 ```python
 import os
 import asyncio
-from ceramic import DefaultAioHttpClient
-from ceramic import AsyncCeramic
+from ceramic_ai import DefaultAioHttpClient
+from ceramic_ai import AsyncCeramic
 
 
 async def main() -> None:
@@ -117,16 +114,16 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `ceramic.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `ceramic_ai.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `ceramic.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `ceramic_ai.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `ceramic.APIError`.
+All errors inherit from `ceramic_ai.APIError`.
 
 ```python
-import ceramic
-from ceramic import Ceramic
+import ceramic_ai
+from ceramic_ai import Ceramic
 
 client = Ceramic()
 
@@ -134,12 +131,12 @@ try:
     client.search(
         query="California rental laws",
     )
-except ceramic.APIConnectionError as e:
+except ceramic_ai.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except ceramic.RateLimitError as e:
+except ceramic_ai.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except ceramic.APIStatusError as e:
+except ceramic_ai.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -167,7 +164,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from ceramic import Ceramic
+from ceramic_ai import Ceramic
 
 # Configure the default for all requests:
 client = Ceramic(
@@ -187,7 +184,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from ceramic import Ceramic
+from ceramic_ai import Ceramic
 
 # Configure the default for all requests:
 client = Ceramic(
@@ -241,7 +238,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from ceramic import Ceramic
+from ceramic_ai import Ceramic
 
 client = Ceramic()
 response = client.with_raw_response.search(
@@ -253,9 +250,9 @@ client = response.parse()  # get the object that `search()` would have returned
 print(client.request_id)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/ceramic-python/tree/main/src/ceramic/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/CeramicTeam/ceramic-python/tree/main/src/ceramic_ai/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/ceramic-python/tree/main/src/ceramic/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/CeramicTeam/ceramic-python/tree/main/src/ceramic_ai/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -319,7 +316,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from ceramic import Ceramic, DefaultHttpxClient
+from ceramic_ai import Ceramic, DefaultHttpxClient
 
 client = Ceramic(
     # Or use the `CERAMIC_BASE_URL` env var
@@ -342,7 +339,7 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from ceramic import Ceramic
+from ceramic_ai import Ceramic
 
 with Ceramic() as client:
   # make requests here
@@ -361,7 +358,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/ceramic-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/CeramicTeam/ceramic-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 
@@ -370,8 +367,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import ceramic
-print(ceramic.__version__)
+import ceramic_ai
+print(ceramic_ai.__version__)
 ```
 
 ## Requirements
