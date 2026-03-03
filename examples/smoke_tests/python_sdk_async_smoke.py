@@ -1,13 +1,13 @@
 import os
 import asyncio
-from typing import Awaitable, Callable, Iterable, Mapping, Optional, Tuple, Type, cast
+from typing import Type, Tuple, Mapping, Callable, Iterable, Optional, Awaitable, cast
 
 from ceramic_ai import AsyncCeramic
 from ceramic_ai._exceptions import (
     CeramicError,
     APIStatusError,
-    AuthenticationError,
     BadRequestError,
+    AuthenticationError,
 )
 
 # ---------------------------
@@ -153,11 +153,11 @@ async def ex_max_results_validations() -> None:
     for name, mr, is_valid in cases:
         label = f"max_results validation: {name} (max_results={mr})"
         if is_valid:
-            await expect_ok(label, lambda: client.search(query="rate limits and retries", max_results=mr))
+            await expect_ok(label, lambda mr=mr: client.search(query="rate limits and retries", max_results=mr))
         else:
             await expect_api_error(
                 label,
-                lambda: client.search(query="rate limits and retries", max_results=mr),
+                lambda mr=mr: client.search(query="rate limits and retries", max_results=mr),
                 status=400,
                 code="invalid_parameter",
                 exc=BadRequestError,
@@ -182,11 +182,11 @@ async def ex_max_description_length_validations() -> None:
     for name, mdl, is_valid in cases:
         label = f"max_description_length validation: {name} (max_description_length={mdl})"
         if is_valid:
-            await expect_ok(label, lambda: client.search(query="rate limits and retries", max_description_length=mdl))
+            await expect_ok(label, lambda mdl=mdl: client.search(query="rate limits and retries", max_description_length=mdl))
         else:
             await expect_api_error(
                 label,
-                lambda: client.search(query="rate limits and retries", max_description_length=mdl),
+                lambda mdl=mdl: client.search(query="rate limits and retries", max_description_length=mdl),
                 status=400,
                 code="invalid_parameter",
                 exc=BadRequestError,
