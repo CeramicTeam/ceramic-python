@@ -94,7 +94,7 @@ class Ceramic(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("CERAMIC_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.ceramic.ai"
+            base_url = f"https://api.ceramic.ai/"
 
         super().__init__(
             version=__version__,
@@ -223,7 +223,7 @@ class Ceramic(SyncAPIClient):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self.post(
-            "/",
+            "/search",
             body=maybe_transform(
                 {
                     "query": query,
@@ -314,7 +314,7 @@ class AsyncCeramic(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("CERAMIC_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.ceramic.ai"
+            base_url = f"https://api.ceramic.ai/"
 
         super().__init__(
             version=__version__,
@@ -443,7 +443,7 @@ class AsyncCeramic(AsyncAPIClient):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self.post(
-            "/",
+            "/search",
             body=await async_maybe_transform(
                 {
                     "query": query,
