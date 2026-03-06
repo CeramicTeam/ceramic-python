@@ -849,7 +849,7 @@ class TestCeramic:
     @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Ceramic) -> None:
-        respx_mock.post("/").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             client.with_streaming_response.search(query="California rental laws").__enter__()
@@ -859,7 +859,7 @@ class TestCeramic:
     @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Ceramic) -> None:
-        respx_mock.post("/").mock(return_value=httpx.Response(500))
+        respx_mock.post("/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             client.with_streaming_response.search(query="California rental laws").__enter__()
@@ -889,7 +889,7 @@ class TestCeramic:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/").mock(side_effect=retry_handler)
+        respx_mock.post("/search").mock(side_effect=retry_handler)
 
         response = client.with_raw_response.search(query="California rental laws")
 
@@ -913,7 +913,7 @@ class TestCeramic:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/").mock(side_effect=retry_handler)
+        respx_mock.post("/search").mock(side_effect=retry_handler)
 
         response = client.with_raw_response.search(
             query="California rental laws", extra_headers={"x-stainless-retry-count": Omit()}
@@ -938,7 +938,7 @@ class TestCeramic:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/").mock(side_effect=retry_handler)
+        respx_mock.post("/search").mock(side_effect=retry_handler)
 
         response = client.with_raw_response.search(
             query="California rental laws", extra_headers={"x-stainless-retry-count": "42"}
@@ -1761,7 +1761,7 @@ class TestAsyncCeramic:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncCeramic
     ) -> None:
-        respx_mock.post("/").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await async_client.with_streaming_response.search(query="California rental laws").__aenter__()
@@ -1771,7 +1771,7 @@ class TestAsyncCeramic:
     @mock.patch("ceramic_ai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncCeramic) -> None:
-        respx_mock.post("/").mock(return_value=httpx.Response(500))
+        respx_mock.post("/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await async_client.with_streaming_response.search(query="California rental laws").__aenter__()
@@ -1801,7 +1801,7 @@ class TestAsyncCeramic:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/").mock(side_effect=retry_handler)
+        respx_mock.post("/search").mock(side_effect=retry_handler)
 
         response = await client.with_raw_response.search(query="California rental laws")
 
@@ -1825,7 +1825,7 @@ class TestAsyncCeramic:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/").mock(side_effect=retry_handler)
+        respx_mock.post("/search").mock(side_effect=retry_handler)
 
         response = await client.with_raw_response.search(
             query="California rental laws", extra_headers={"x-stainless-retry-count": Omit()}
@@ -1850,7 +1850,7 @@ class TestAsyncCeramic:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/").mock(side_effect=retry_handler)
+        respx_mock.post("/search").mock(side_effect=retry_handler)
 
         response = await client.with_raw_response.search(
             query="California rental laws", extra_headers={"x-stainless-retry-count": "42"}
