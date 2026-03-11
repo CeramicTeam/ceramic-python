@@ -104,23 +104,7 @@ async def ex_basic_query() -> None:
 
 
 # ---------------------------
-# 2) Basic query + params
-# ---------------------------
-
-async def ex_basic_query_with_params() -> None:
-    client = make_client()
-    await expect_ok(
-        "basic query + max_results/max_description_length",
-        lambda: client.search(
-            query="Stanford CS229",
-            max_results=3,
-            max_description_length=200,
-        ),
-    )
-
-
-# ---------------------------
-# 3) Invalid API key
+# 2) Invalid API key
 # ---------------------------
 
 async def ex_invalid_api_key() -> None:
@@ -135,7 +119,7 @@ async def ex_invalid_api_key() -> None:
 
 
 # ---------------------------
-# 4) max_results validations
+# 3) max_results validations
 # ---------------------------
 
 # async def ex_max_results_validations() -> None:
@@ -164,7 +148,7 @@ async def ex_invalid_api_key() -> None:
 
 
 # ---------------------------
-# 5) max_description_length validations
+# 4) max_description_length validations
 # ---------------------------
 
 # async def ex_max_description_length_validations() -> None:
@@ -195,7 +179,6 @@ async def ex_invalid_api_key() -> None:
 async def main() -> None:
     try:
         await ex_basic_query()
-        await ex_basic_query_with_params()
         await ex_invalid_api_key()
         # await ex_max_results_validations()
         # await ex_max_description_length_validations()

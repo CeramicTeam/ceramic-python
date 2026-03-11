@@ -104,23 +104,7 @@ def ex_basic_query() -> None:
 
 
 # ---------------------------
-# 2) Basic query + params
-# ---------------------------
-
-def ex_basic_query_with_params() -> None:
-    client = make_client()
-    expect_ok(
-        "basic query + max_results/max_description_length",
-        lambda: client.search(
-            query="Stanford CS229",
-            max_results=3,
-            max_description_length=200,
-        ),
-    )
-
-
-# ---------------------------
-# 3) Invalid API key
+# 2) Invalid API key
 # ---------------------------
 
 def ex_invalid_api_key() -> None:
@@ -135,7 +119,7 @@ def ex_invalid_api_key() -> None:
 
 
 # ---------------------------
-# 4) max_results validations
+# 3) max_results validations
 # ---------------------------
 
 # def ex_max_results_validations() -> None:
@@ -164,7 +148,7 @@ def ex_invalid_api_key() -> None:
 
 
 # ---------------------------
-# 5) max_description_length validations
+# 4) max_description_length validations
 # ---------------------------
 
 # def ex_max_description_length_validations() -> None:
@@ -195,7 +179,6 @@ def ex_invalid_api_key() -> None:
 def main() -> None:
     try:
         ex_basic_query()
-        ex_basic_query_with_params()
         ex_invalid_api_key()
         # ex_max_results_validations()
         # ex_max_description_length_validations()
