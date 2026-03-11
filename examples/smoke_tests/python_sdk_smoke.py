@@ -91,7 +91,7 @@ def make_client(api_key: Optional[str] = None) -> Ceramic:
     """
     return Ceramic(
         api_key=api_key or os.environ["CERAMIC_API_KEY"],
-        base_url="https://api.ceramic.ai/search",
+        base_url="https://api.ceramic.ai/",
     )
 
 
