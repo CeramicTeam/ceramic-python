@@ -1,12 +1,11 @@
 import os
 import asyncio
-from typing import Type, Tuple, Mapping, Callable, Iterable, Optional, Awaitable, cast
+from typing import Type, Mapping, Callable, Optional, Awaitable, cast
 
 from ceramic_ai import AsyncCeramic
 from ceramic_ai._exceptions import (
     CeramicError,
     APIStatusError,
-    BadRequestError,
     AuthenticationError,
 )
 
