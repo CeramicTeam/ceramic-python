@@ -1,11 +1,10 @@
 import os
-from typing import Type, Tuple, Mapping, Callable, Iterable, Optional, cast
+from typing import Type, Mapping, Callable, Optional, cast
 
 from ceramic_ai import Ceramic
 from ceramic_ai._exceptions import (
     CeramicError,
     APIStatusError,
-    BadRequestError,
     AuthenticationError,
 )
 
