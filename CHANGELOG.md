@@ -1,0 +1,44 @@
+# Changelog
+
+## 1.0.0 (2026-03-26)
+
+Full Changelog: [v0.0.1...v1.0.0](https://github.com/CeramicTeam/ceramic-python/compare/v0.0.1...v1.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* change API base path to /search
+
+### Bug Fixes
+
+* change API base path to /search ([aabc864](https://github.com/CeramicTeam/ceramic-python/commit/aabc8645cf73e645279bf2c3b9399499deef690b))
+* **deps:** bump minimum typing-extensions version ([3e87f77](https://github.com/CeramicTeam/ceramic-python/commit/3e87f77e5c0c9634b50520be6ebab2c8c60b5be7))
+* **pydantic:** do not pass `by_alias` unless set ([8364d67](https://github.com/CeramicTeam/ceramic-python/commit/8364d673d495d7c8a0125c25254d6874bb039c0b))
+* sanitize endpoint path params ([5daf5e7](https://github.com/CeramicTeam/ceramic-python/commit/5daf5e7c98dfe2820821b78a183b228d6a5b564c))
+* update smoke test base_url to root ([e2233dd](https://github.com/CeramicTeam/ceramic-python/commit/e2233ddd3f7bf1248830380237836b368281196d))
+
+
+### Chores
+
+* **ci:** bump uv version ([60871ac](https://github.com/CeramicTeam/ceramic-python/commit/60871ac42a907812afad82470b3ab23f90a0c2fc))
+* **ci:** skip lint on metadata-only changes ([b4f6bd0](https://github.com/CeramicTeam/ceramic-python/commit/b4f6bd05d70a54b82eee20f6633566702fae8dc0))
+* **ci:** skip uploading artifacts on stainless-internal branches ([1f287c2](https://github.com/CeramicTeam/ceramic-python/commit/1f287c296d4a3111dea876b193982b479b96db5d))
+* configure new SDK language ([4261901](https://github.com/CeramicTeam/ceramic-python/commit/4261901893e1dae44f75c5e3e8bf71986fcd8bad))
+* format all `api.md` files ([57bcc3d](https://github.com/CeramicTeam/ceramic-python/commit/57bcc3db1497a14f3ac5f8caa674dc287b05758b))
+* **internal:** add request options to SSE classes ([cf72d6b](https://github.com/CeramicTeam/ceramic-python/commit/cf72d6b830530e74cc91bd58114f1a0c15ab5be7))
+* **internal:** make `test_proxy_environment_variables` more resilient ([8ac85d4](https://github.com/CeramicTeam/ceramic-python/commit/8ac85d46623e14a615d6c93eeeae800f8ab4c009))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([63e2792](https://github.com/CeramicTeam/ceramic-python/commit/63e279239128e71feff19b2e0e95b622a43d3349))
+* **internal:** refactor authentication internals ([deddee4](https://github.com/CeramicTeam/ceramic-python/commit/deddee4053a01370b3eef87881fa1c1e34dd30fa))
+* **internal:** remove mock server code ([3496061](https://github.com/CeramicTeam/ceramic-python/commit/3496061ed8380e1305386f44a0973aebffa58f2f))
+* **internal:** tweak CI branches ([4cd9675](https://github.com/CeramicTeam/ceramic-python/commit/4cd96759c8e1a52c8e9b2f608912911312f4d1a7))
+* **internal:** update gitignore ([63bfb19](https://github.com/CeramicTeam/ceramic-python/commit/63bfb19385f7901a1a352d93e76d717d28e513b2))
+* update mock server docs ([facdb88](https://github.com/CeramicTeam/ceramic-python/commit/facdb88889325ad2a83b9f38d05743ca7eece792))
+
+
+### Documentation
+
+* add query param to README example request and include docs/support links in Stainless config ([a124d48](https://github.com/CeramicTeam/ceramic-python/commit/a124d483f176f5fed3d68198f130db8994c76a9c))
+* fix python package name ([284cdc3](https://github.com/CeramicTeam/ceramic-python/commit/284cdc35cfb53e8c3c2dbddbedc1a0c577b45c59))
+* staging branch version of OpenAPI spec ([0dab5c7](https://github.com/CeramicTeam/ceramic-python/commit/0dab5c79faca25b03f8b3ab24664a056763cab0b))
+* update production repo ([e346f0d](https://github.com/CeramicTeam/ceramic-python/commit/e346f0dbada519dccaf30d7f2c8b99eca5a9c0ba))
+* update README REST API documentation link to api-reference/search ([b33fe52](https://github.com/CeramicTeam/ceramic-python/commit/b33fe52eb1e1ff95aeea4813f8bf98356611f52a))
+* updated error response ([c63b511](https://github.com/CeramicTeam/ceramic-python/commit/c63b5118c20bf73e5a74a5c8467998f110581144))
