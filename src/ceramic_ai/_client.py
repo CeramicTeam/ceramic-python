@@ -51,6 +51,12 @@ from .types.search_response import SearchResponse
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Ceramic", "AsyncCeramic", "Client", "AsyncClient"]
 
+def _validate_search_query(query: str) -> None:
+    words = query.split()  # splits on whitespace and ignores extra whitespace
+    if not 1 <= len(words) <= 50:
+        raise CeramicError(
+            f"Invalid `query`: expected between 1 and 50 words, got {len(words)}."
+        )
 
 class Ceramic(SyncAPIClient):
     # client options
@@ -222,6 +228,8 @@ class Ceramic(SyncAPIClient):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        _validate_search_query(query)
+
         return self.post(
             "/search",
             body=maybe_transform(
@@ -442,6 +450,9 @@ class AsyncCeramic(AsyncAPIClient):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+
+        _validate_search_query(query)
+
         return await self.post(
             "/search",
             body=await async_maybe_transform(
