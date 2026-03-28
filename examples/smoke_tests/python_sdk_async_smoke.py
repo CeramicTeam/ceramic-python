@@ -39,7 +39,15 @@ async def expect_ok(label: str, fn: Callable[[], Awaitable[object]]) -> None:
     except Exception as e:
         bad(label, f"got {type(e).__name__}: {e}")
 
-
+async def expect_validation_error(label: str, fn: Callable[[], Awaitable[object]]) -> None:
+    try:
+        await fn()
+        bad(label, "unexpected success (expected a validation error)")
+    except CeramicError as e:
+        ok(label)
+    except Exception as e:
+        bad(label, f"wrong exception: expected CeramicError, got {type(e).__name__}: {e}")
+        
 async def expect_api_error(
     label: str,
     fn: Callable[[], Awaitable[object]],
@@ -93,19 +101,13 @@ def make_client(api_key: Optional[str] = None) -> AsyncCeramic:
         base_url="https://api.ceramic.ai/",
     )
 
-
 # ---------------------------
-# 1) Basic query
+# Tests
 # ---------------------------
 
 async def ex_basic_query() -> None:
     client = make_client()
     await expect_ok("basic query", lambda: client.search(query="California rental laws"))
-
-
-# ---------------------------
-# 2) Invalid API key
-# ---------------------------
 
 async def ex_invalid_api_key() -> None:
     client = make_client(api_key="invalid_api_key")
@@ -117,10 +119,10 @@ async def ex_invalid_api_key() -> None:
         exc=AuthenticationError,
     )
 
-
-# ---------------------------
-# 3) max_results validations
-# ---------------------------
+async def ex_query_validation() -> None:
+    client = make_client()
+    await expect_validation_error("query: too many words", lambda: client.search(query=" ".join(["word"] * 51)))
+    await expect_validation_error("query: blank",          lambda: client.search(query="   "))
 
 # async def ex_max_results_validations() -> None:
 #     client = make_client()
@@ -145,11 +147,6 @@ async def ex_invalid_api_key() -> None:
 #                 code="invalid_parameter",
 #                 exc=BadRequestError,
 #             )
-
-
-# ---------------------------
-# 4) max_description_length validations
-# ---------------------------
 
 # async def ex_max_description_length_validations() -> None:
 #     client = make_client()
@@ -180,6 +177,7 @@ async def main() -> None:
     try:
         await ex_basic_query()
         await ex_invalid_api_key()
+        await ex_query_validation()
         # await ex_max_results_validations()
         # await ex_max_description_length_validations()
     except CeramicError as e:
