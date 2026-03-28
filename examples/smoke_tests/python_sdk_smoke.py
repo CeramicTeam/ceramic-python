@@ -38,6 +38,14 @@ def expect_ok(label: str, fn: Callable[[], object]) -> None:
     except Exception as e:
         bad(label, f"got {type(e).__name__}: {e}")
 
+def expect_validation_error(label: str, fn: Callable[[], object]) -> None:
+    try:
+        fn()
+        bad(label, "unexpected success (expected a validation error)")
+    except CeramicError as e:
+        ok(label)
+    except Exception as e:
+        bad(label, f"wrong exception: expected CeramicError, got {type(e).__name__}: {e}")
 
 def expect_api_error(
     label: str,
@@ -93,19 +101,13 @@ def make_client(api_key: Optional[str] = None) -> Ceramic:
         base_url="https://api.ceramic.ai/",
     )
 
-
 # ---------------------------
-# 1) Basic query
+# Tests
 # ---------------------------
 
 def ex_basic_query() -> None:
     client = make_client()
     expect_ok("basic query", lambda: client.search(query="California rental laws"))
-
-
-# ---------------------------
-# 2) Invalid API key
-# ---------------------------
 
 def ex_invalid_api_key() -> None:
     client = make_client(api_key="invalid_api_key")
@@ -117,10 +119,11 @@ def ex_invalid_api_key() -> None:
         exc=AuthenticationError,
     )
 
+def ex_query_validation() -> None:
+    client = make_client()
+    expect_validation_error("query: too many words",  lambda: client.search(query=" ".join(["word"] * 51)))
+    expect_validation_error("query: blank",           lambda: client.search(query="   "))
 
-# ---------------------------
-# 3) max_results validations
-# ---------------------------
 
 # def ex_max_results_validations() -> None:
 #     client = make_client()
@@ -145,11 +148,6 @@ def ex_invalid_api_key() -> None:
 #                 code="invalid_parameter",
 #                 exc=BadRequestError,
 #             )
-
-
-# ---------------------------
-# 4) max_description_length validations
-# ---------------------------
 
 # def ex_max_description_length_validations() -> None:
 #     client = make_client()
@@ -180,6 +178,7 @@ def main() -> None:
     try:
         ex_basic_query()
         ex_invalid_api_key()
+        ex_query_validation()
         # ex_max_results_validations()
         # ex_max_description_length_validations()
     except CeramicError as e:
