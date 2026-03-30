@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0 (2026-03-30)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/CeramicTeam/ceramic-python/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([1a2e0b3](https://github.com/CeramicTeam/ceramic-python/commit/1a2e0b38698193088625bedec62a395a161641ad))
+* **python-sdk:** add client-side validation for search query word count ([3c1d67c](https://github.com/CeramicTeam/ceramic-python/commit/3c1d67ce0167e6b3eb9513c42c0357e5f8fd90c0))
+* Update main with staging ([2f0e5f9](https://github.com/CeramicTeam/ceramic-python/commit/2f0e5f9df377c9a79e9858c1fb190a255f5c045d))
+
 ## 1.1.0 (2026-03-27)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/CeramicTeam/ceramic-python/compare/v1.0.0...v1.1.0)
