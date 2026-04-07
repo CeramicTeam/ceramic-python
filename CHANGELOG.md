@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1 (2026-04-07)
+
+Full Changelog: [v1.2.0...v1.2.1](https://github.com/CeramicTeam/ceramic-python/compare/v1.2.0...v1.2.1)
+
+### Features
+
+* Update main with staging ([9535c77](https://github.com/CeramicTeam/ceramic-python/commit/9535c77eaf07a0cf4c1747e70a5486c93309deac))
+
 ## 1.2.0 (2026-03-30)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/CeramicTeam/ceramic-python/compare/v1.1.0...v1.2.0)
