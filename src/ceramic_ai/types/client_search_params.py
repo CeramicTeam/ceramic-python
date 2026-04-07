@@ -11,7 +11,7 @@ __all__ = ["ClientSearchParams"]
 
 class ClientSearchParams(TypedDict, total=False):
     query: Required[str]
-    """The search query in natural language.
+    """The search query in keyword format.
 
     Must contain between 1 and 50 words (words are separated by spaces; extra
     whitespace is ignored).

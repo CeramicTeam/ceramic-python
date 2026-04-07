@@ -214,7 +214,7 @@ class Ceramic(SyncAPIClient):
         Search the web and retrieve relevant content.
 
         Args:
-          query: The search query in natural language. Must contain between 1 and 50 words (words
+          query: The search query in keyword format. Must contain between 1 and 50 words (words
               are separated by spaces; extra whitespace is ignored).
 
           max_description_length: Maximum character length for result descriptions.
@@ -437,7 +437,7 @@ class AsyncCeramic(AsyncAPIClient):
         Search the web and retrieve relevant content.
 
         Args:
-          query: The search query in natural language. Must contain between 1 and 50 words (words
+          query: The search query in keyword format. Must contain between 1 and 50 words (words
               are separated by spaces; extra whitespace is ignored).
 
           max_description_length: Maximum character length for result descriptions.
