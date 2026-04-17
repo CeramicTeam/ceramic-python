@@ -13,9 +13,6 @@ class ResultResult(BaseModel):
     description: str
     """A text snippet from the page content."""
 
-    score: float
-    """Relevance score for the result."""
-
     title: str
     """The title of the web page."""
 
