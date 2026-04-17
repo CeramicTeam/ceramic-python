@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.0 (2026-04-17)
+
+Full Changelog: [v1.2.1...v2.0.0](https://github.com/CeramicTeam/ceramic-python/compare/v1.2.1...v2.0.0)
+
+### Features
+
+* Updating main with staging ([14788dd](https://github.com/CeramicTeam/ceramic-python/commit/14788dd44074e9a94986bacfd364ceb1d8227bf4))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([07e8d4b](https://github.com/CeramicTeam/ceramic-python/commit/07e8d4bf9f97ec8cf15641e4d9bbe94f5ad23580))
+* ensure file data are only sent as 1 parameter ([6f87619](https://github.com/CeramicTeam/ceramic-python/commit/6f87619321106741c8437af3139a22a0b863dc77))
+
+
+### Chores
+
+* **ci:** remove release-doctor workflow ([a3eb54d](https://github.com/CeramicTeam/ceramic-python/commit/a3eb54d0b124d2187ad0451d1709e5b18610fa35))
+
 ## 1.2.1 (2026-04-07)
 
 Full Changelog: [v1.2.0...v1.2.1](https://github.com/CeramicTeam/ceramic-python/compare/v1.2.0...v1.2.1)
