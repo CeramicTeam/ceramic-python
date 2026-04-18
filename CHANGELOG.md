@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.1 (2026-04-18)
+
+Full Changelog: [v2.0.0...v2.0.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.0.0...v2.0.1)
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([88d9f55](https://github.com/CeramicTeam/ceramic-python/commit/88d9f55663b288f9c85c65581a20d04183a527a3))
+
 ## 2.0.0 (2026-04-17)
 
 Full Changelog: [v1.2.1...v2.0.0](https://github.com/CeramicTeam/ceramic-python/compare/v1.2.1...v2.0.0)
