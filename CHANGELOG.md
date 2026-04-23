@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.2 (2026-04-23)
+
+Full Changelog: [v2.0.1...v2.0.2](https://github.com/CeramicTeam/ceramic-python/compare/v2.0.1...v2.0.2)
+
+### Chores
+
+* **internal:** more robust bootstrap script ([a01b77e](https://github.com/CeramicTeam/ceramic-python/commit/a01b77e005fdfc6d52da2f22436fa11bcd8535b6))
+
 ## 2.0.1 (2026-04-18)
 
 Full Changelog: [v2.0.0...v2.0.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.0.0...v2.0.1)
