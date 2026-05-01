@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.1.0 (2026-05-01)
+
+Full Changelog: [v2.0.2...v2.1.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.0.2...v2.1.0)
+
+### Features
+
+* support setting headers via env ([dff4dc8](https://github.com/CeramicTeam/ceramic-python/commit/dff4dc8446469b3b6dde7f6f2677a7bd3e3f6928))
+
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([101906b](https://github.com/CeramicTeam/ceramic-python/commit/101906b38d2aeffe5e6111a8f8778210db470f71))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([d4bd478](https://github.com/CeramicTeam/ceramic-python/commit/d4bd47804aaa4d05491a9a6defcf327ab298f408))
+
 ## 2.0.2 (2026-04-23)
 
 Full Changelog: [v2.0.1...v2.0.2](https://github.com/CeramicTeam/ceramic-python/compare/v2.0.1...v2.0.2)
