@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.1 (2026-05-09)
+
+Full Changelog: [v2.1.0...v2.1.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.1.0...v2.1.1)
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([02a75c8](https://github.com/CeramicTeam/ceramic-python/commit/02a75c84ada66845d9d70f369abe11fe476b943e))
+
 ## 2.1.0 (2026-05-01)
 
 Full Changelog: [v2.0.2...v2.1.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.0.2...v2.1.0)
