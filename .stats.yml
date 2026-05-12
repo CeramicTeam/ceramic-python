@@ -1,4 +1,4 @@
 configured_endpoints: 1
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/ceramic/ceramic-309f40306c6801beeba05e4cfdef433c6b49eea89daf7188612be3ccd0542810.yml
-openapi_spec_hash: ed2606c6e882582e23a124046d15fc34
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/ceramic/ceramic-2366e96ff5a3a68cd42f1759d379cd8d54d396373d773a1736ffd65241ebb758.yml
+openapi_spec_hash: c0719dd70f6413839f5bb7717fd5538e
 config_hash: 197d688986ceb975baa767c9e5555171

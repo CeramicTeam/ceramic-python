@@ -212,7 +212,6 @@ class Ceramic(SyncAPIClient):
         *,
         query: str,
         max_description_length: int | Omit = omit,
-        max_results: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -227,9 +226,7 @@ class Ceramic(SyncAPIClient):
           query: The search query in keyword format. Must contain between 1 and 50 words (words
               are separated by spaces; extra whitespace is ignored).
 
-          max_description_length: Maximum character length for result descriptions.
-
-          max_results: Maximum number of results to return.
+          max_description_length: Maximum character length for each result's description.
 
           extra_headers: Send extra headers
 
@@ -247,7 +244,6 @@ class Ceramic(SyncAPIClient):
                 {
                     "query": query,
                     "max_description_length": max_description_length,
-                    "max_results": max_results,
                 },
                 client_search_params.ClientSearchParams,
             ),
@@ -444,7 +440,6 @@ class AsyncCeramic(AsyncAPIClient):
         *,
         query: str,
         max_description_length: int | Omit = omit,
-        max_results: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -459,9 +454,7 @@ class AsyncCeramic(AsyncAPIClient):
           query: The search query in keyword format. Must contain between 1 and 50 words (words
               are separated by spaces; extra whitespace is ignored).
 
-          max_description_length: Maximum character length for result descriptions.
-
-          max_results: Maximum number of results to return.
+          max_description_length: Maximum character length for each result's description.
 
           extra_headers: Send extra headers
 
@@ -480,7 +473,6 @@ class AsyncCeramic(AsyncAPIClient):
                 {
                     "query": query,
                     "max_description_length": max_description_length,
-                    "max_results": max_results,
                 },
                 client_search_params.ClientSearchParams,
             ),
