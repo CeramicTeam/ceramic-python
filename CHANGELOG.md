@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0 (2026-05-12)
+
+Full Changelog: [v2.1.1...v2.2.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.1.1...v2.2.0)
+
+### Features
+
+* **internal/types:** support eagerly validating pydantic iterators ([9e2f194](https://github.com/CeramicTeam/ceramic-python/commit/9e2f1942eccd4f4e407ee4d16ab651665605625d))
+
 ## 2.1.1 (2026-05-09)
 
 Full Changelog: [v2.1.0...v2.1.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.1.0...v2.1.1)
