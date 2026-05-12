@@ -7,6 +7,7 @@ from ceramic_ai._exceptions import (
     CeramicError,
     APIStatusError,
     AuthenticationError,
+    UnprocessableEntityError,
 )
 
 # ---------------------------
@@ -148,29 +149,29 @@ async def ex_query_validation() -> None:
 #                 exc=BadRequestError,
 #             )
 
-# async def ex_max_description_length_validations() -> None:
-#     client = make_client()
+async def ex_max_description_length_validations() -> None:
+    client = make_client()
 
-#     cases: Iterable[Tuple[str, int, bool]] = [
-#         ("zero", 0, False),
-#         ("small", 40, False),
-#         ("valid_small", 50, True),
-#         ("valid_default", 1500, True),
-#         ("very_large", 6000, False),
-#     ]
+    cases = [
+        ("zero",          0,    False),
+        ("below_min",     999,  False),
+        ("valid_min",     1000, True),
+        ("valid_default", 3000, True),
+        ("above_max",     8001, False),
+    ]
 
-#     for name, mdl, is_valid in cases:
-#         label = f"max_description_length validation: {name} (max_description_length={mdl})"
-#         if is_valid:
-#             await expect_ok(label, lambda mdl=mdl: client.search(query="rate limits and retries", max_description_length=mdl))
-#         else:
-#             await expect_api_error(
-#                 label,
-#                 lambda mdl=mdl: client.search(query="rate limits and retries", max_description_length=mdl),
-#                 status=400,
-#                 code="invalid_parameter",
-#                 exc=BadRequestError,
-#             )
+    for name, mdl, is_valid in cases:
+        label = f"max_description_length validation: {name} (max_description_length={mdl})"
+        if is_valid:
+            await expect_ok(label, lambda mdl=mdl: client.search(query="rate limits and retries", max_description_length=mdl))
+        else:
+            await expect_api_error(
+                label,
+                lambda mdl=mdl: client.search(query="rate limits and retries", max_description_length=mdl),
+                status=422,
+                code="invalid_parameter",
+                exc=UnprocessableEntityError,
+            )
 
 
 async def main() -> None:
@@ -179,7 +180,7 @@ async def main() -> None:
         await ex_invalid_api_key()
         await ex_query_validation()
         # await ex_max_results_validations()
-        # await ex_max_description_length_validations()
+        await ex_max_description_length_validations()
     except CeramicError as e:
         print("\nCeramic SDK error (not an API status error):")
         print(str(e))
