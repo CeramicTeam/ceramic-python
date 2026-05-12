@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0 (2026-05-12)
+
+Full Changelog: [v2.2.0...v2.3.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.2.0...v2.3.0)
+
+### Features
+
+* add maxDescriptionLength parameter ([8ea839c](https://github.com/CeramicTeam/ceramic-python/commit/8ea839c96d46ac2c60ad25e2c6e1da75c9f34c46))
+
 ## 2.2.0 (2026-05-12)
 
 Full Changelog: [v2.1.1...v2.2.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.1.1...v2.2.0)
