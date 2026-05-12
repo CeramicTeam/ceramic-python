@@ -30,8 +30,7 @@ class TestClient:
     def test_method_search_with_all_params(self, client: Ceramic) -> None:
         client_ = client.search(
             query="California rental laws",
-            max_description_length=1,
-            max_results=1,
+            max_description_length=1000,
         )
         assert_matches_type(SearchResponse, client_, path=["response"])
 
@@ -80,8 +79,7 @@ class TestAsyncClient:
     async def test_method_search_with_all_params(self, async_client: AsyncCeramic) -> None:
         client = await async_client.search(
             query="California rental laws",
-            max_description_length=1,
-            max_results=1,
+            max_description_length=1000,
         )
         assert_matches_type(SearchResponse, client, path=["response"])
 

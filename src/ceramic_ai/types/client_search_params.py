@@ -18,7 +18,4 @@ class ClientSearchParams(TypedDict, total=False):
     """
 
     max_description_length: Annotated[int, PropertyInfo(alias="maxDescriptionLength")]
-    """Maximum character length for result descriptions."""
-
-    max_results: Annotated[int, PropertyInfo(alias="maxResults")]
-    """Maximum number of results to return."""
+    """Maximum character length for each result's description."""
