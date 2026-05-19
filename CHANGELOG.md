@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1 (2026-05-13)
+
+Full Changelog: [v2.3.0...v2.3.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.0...v2.3.1)
+
 ## 2.3.0 (2026-05-12)
 
 Full Changelog: [v2.2.0...v2.3.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.2.0...v2.3.0)
