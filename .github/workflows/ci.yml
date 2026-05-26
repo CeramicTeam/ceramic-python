@@ -15,6 +15,11 @@ on:
       - 'stl-preview-base/**'
 
 jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Automated checks"
+
   lint:
     timeout-minutes: 10
     name: lint
