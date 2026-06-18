@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.3 (2026-06-18)
+
+Full Changelog: [v2.3.2...v2.3.3](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.2...v2.3.3)
+
+### Bug Fixes
+
+* **auth:** prioritize first auth header ([b00096f](https://github.com/CeramicTeam/ceramic-python/commit/b00096f8c7f4d94bab4f24cf14789b6e793a4558))
+
 ## 2.3.2 (2026-05-26)
 
 Full Changelog: [v2.3.1...v2.3.2](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.1...v2.3.2)
