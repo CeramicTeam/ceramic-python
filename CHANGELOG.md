@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.4 (2026-07-14)
+
+Full Changelog: [v2.3.3...v2.3.4](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.3...v2.3.4)
+
+### Bug Fixes
+
+* **internal:** resolve build failures ([bf22e02](https://github.com/CeramicTeam/ceramic-python/commit/bf22e02c0f399336c89ff99f243155ecd8e44a13))
+
 ## 2.3.3 (2026-06-18)
 
 Full Changelog: [v2.3.2...v2.3.3](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.2...v2.3.3)
