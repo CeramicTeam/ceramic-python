@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.0 (2026-07-18)
+
+Full Changelog: [v2.3.4...v2.4.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.4...v2.4.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([a0a8938](https://github.com/CeramicTeam/ceramic-python/commit/a0a8938aa10990c4c3d97505b588647bad59fccd))
+
 ## 2.3.4 (2026-07-14)
 
 Full Changelog: [v2.3.3...v2.3.4](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.3...v2.3.4)
