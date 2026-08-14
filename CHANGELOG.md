@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.1 (2026-08-14)
+
+Full Changelog: [v2.4.0...v2.4.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.0...v2.4.1)
+
+### Bug Fixes
+
+* restore generated branch exclusion in ci.yml and split duplicate smoke-test step in build-and-verify.yml ([1827d7c](https://github.com/CeramicTeam/ceramic-python/commit/1827d7c1afb0a0933b320f131bc2b797a9fb4782))
+
 ## 2.4.0 (2026-07-18)
 
 Full Changelog: [v2.3.4...v2.4.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.3.4...v2.4.0)
