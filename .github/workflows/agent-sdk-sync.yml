@@ -1,0 +1,79 @@
+name: Agent SDK Sync
+
+on:
+  repository_dispatch:
+    types: [openapi-spec-changed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Create sync branch
+        id: branch
+        env:
+          DOCS_PR_NUMBER: ${{ github.event.client_payload.docs_pr_number }}
+        run: |
+          BRANCH="agent/openapi-sync/${DOCS_PR_NUMBER}"
+          git checkout -b "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Write spec diff for the agent to read
+        env:
+          OLD_SPEC: ${{ github.event.client_payload.old_spec }}
+          NEW_SPEC: ${{ github.event.client_payload.new_spec }}
+        run: |
+          printf '%s' "$OLD_SPEC" > /tmp/old-spec.json
+          printf '%s' "$NEW_SPEC" > /tmp/new-spec.json
+          diff -u /tmp/old-spec.json /tmp/new-spec.json > /tmp/spec.diff || true
+
+      - name: Invoke Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            The OpenAPI spec changed:
+              old spec: /tmp/old-spec.json
+              new spec: /tmp/new-spec.json
+              diff:     /tmp/spec.diff
+            Read CLAUDE.md at the repo root for editing, testing, versioning, and changelog rules,
+            then edit the existing SDK source in place to match the new spec. Do not regenerate
+            or rewrite files wholesale. Add tests only where behavior actually changed. Update the
+            version and CHANGELOG.md per CLAUDE.md's rules. Do not run git commands or open a PR —
+            that is handled by later steps in this workflow.
+          claude_args: |
+            --allowedTools Read,Write,Edit,Glob,Grep
+
+      - name: Run tests
+          ./scripts/lint
+          ./scripts/test
+
+      - name: Commit and push
+        env:
+          DOCS_PR_NUMBER: ${{ github.event.client_payload.docs_pr_number }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "sync: update SDK for OpenAPI spec change (docs PR #${DOCS_PR_NUMBER})"
+          git push origin "${{ steps.branch.outputs.branch }}"
+
+      - name: Open PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DOCS_PR_URL: ${{ github.event.client_payload.docs_pr_url }}
+          COMMIT_SHA: ${{ github.event.client_payload.commit_sha }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.branch }}" \
+            --title "sync: update SDK for OpenAPI spec change" \
+            --body "Auto-generated in response to docs PR ${DOCS_PR_URL} (commit ${COMMIT_SHA}). Version bump and changelog entry included per CLAUDE.md rules. Please review before merging."
