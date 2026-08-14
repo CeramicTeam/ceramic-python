@@ -67,6 +67,8 @@ Full Changelog: [v<old-version>...v<new-version>](https://github.com/CeramicTeam
   version-bump classification above.
 - `<scope>` is a short lowercase tag for the area changed (e.g. `search`, `client`, `types`) — check
   recent `CHANGELOG.md` entries for examples already in use.
-- Omit the trailing commit-link parenthetical that appears in older entries — you don't have git
-  access and can't know the commit SHA that will contain this entry. This is an intentional deviation
-  from the historical format, not an error.
+- Always include the "Full Changelog" comparison line — it only references version tags (both known
+  in advance), never omit it.
+- Omit only the trailing commit-link parenthetical that appears after each bullet in older entries —
+  you don't have git access and can't know the commit SHA that will contain this entry. This is an
+  intentional deviation from the historical format, not an error.
