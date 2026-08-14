@@ -14,10 +14,13 @@ jobs:
           python -m venv /tmp/test-env
           /tmp/test-env/bin/pip install dist/*.whl
           /tmp/test-env/bin/python -c "import ceramic_ai; print(ceramic_ai.__version__)"
-      - name: Run smoke tests against the built wheel
+      - name: Run smoke tests against the built wheel (sync)
         env:
           CERAMIC_API_KEY: ${{ secrets.CERAMIC_API_KEY }}
         run: /tmp/test-env/bin/python examples/smoke_tests/python_sdk_smoke.py
+      - name: Run smoke tests against the built wheel (async)
+        env:
+          CERAMIC_API_KEY: ${{ secrets.CERAMIC_API_KEY }}
         run: /tmp/test-env/bin/python examples/smoke_tests/python_sdk_async_smoke.py
       - uses: actions/upload-artifact@v4
         with:
