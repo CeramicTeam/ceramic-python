@@ -1,0 +1,25 @@
+name: Build and verify package
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  python-build-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install build twine
+      - run: python -m build
+      - run: twine check dist/*
+      - run: |
+          python -m venv /tmp/test-env
+          /tmp/test-env/bin/pip install dist/*.whl
+          /tmp/test-env/bin/python -c "import ceramic_ai; print(ceramic_ai.__version__)"
+      - name: Run smoke tests against the built wheel
+        env:
+          CERAMIC_API_KEY: ${{ secrets.CERAMIC_API_KEY }}
+        run: /tmp/test-env/bin/python examples/smoke_tests/python_sdk_smoke.py
+        run: /tmp/test-env/bin/python examples/smoke_tests/python_sdk_async_smoke.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-dist-pr-${{ github.event.pull_request.number }}
+          path: dist/*
