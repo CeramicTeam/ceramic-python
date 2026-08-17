@@ -1,0 +1,135 @@
+name: Agent SDK Sync
+
+on:
+  repository_dispatch:
+    types: [openapi-spec-changed]
+  workflow_dispatch:
+    inputs:
+      old_spec:
+        description: 'Old spec content (JSON) — for manual testing only'
+        required: true
+      new_spec:
+        description: 'New spec content (JSON) — for manual testing only'
+        required: true
+      docs_pr_number:
+        description: 'Docs PR number — use a placeholder like 0 for testing'
+        required: true
+        default: '0'
+      docs_pr_url:
+        description: 'Docs PR URL — placeholder ok for testing'
+        required: false
+        default: 'https://github.com/CeramicTeam/documentation/pull/0'
+      commit_sha:
+        description: 'Commit SHA — placeholder ok for testing'
+        required: false
+        default: 'test'
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Real automation (repository_dispatch) always targets main.
+          # Manual workflow_dispatch testing runs from whatever branch you select via --ref.
+          ref: ${{ github.event_name == 'repository_dispatch' && 'main' || github.ref }}
+
+      - name: Read dispatch payload
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          WD_OLD_SPEC: ${{ github.event.inputs.old_spec }}
+          WD_NEW_SPEC: ${{ github.event.inputs.new_spec }}
+          WD_DOCS_PR_NUMBER: ${{ github.event.inputs.docs_pr_number }}
+          WD_DOCS_PR_URL: ${{ github.event.inputs.docs_pr_url }}
+          WD_COMMIT_SHA: ${{ github.event.inputs.commit_sha }}
+          RD_OLD_SPEC: ${{ github.event.client_payload.old_spec }}
+          RD_NEW_SPEC: ${{ github.event.client_payload.new_spec }}
+          RD_DOCS_PR_NUMBER: ${{ github.event.client_payload.docs_pr_number }}
+          RD_DOCS_PR_URL: ${{ github.event.client_payload.docs_pr_url }}
+          RD_COMMIT_SHA: ${{ github.event.client_payload.commit_sha }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            { echo "old_spec<<SPEC_EOF_OLD"; printf '%s\n' "$WD_OLD_SPEC"; echo "SPEC_EOF_OLD"; } >> "$GITHUB_ENV"
+            { echo "new_spec<<SPEC_EOF_NEW"; printf '%s\n' "$WD_NEW_SPEC"; echo "SPEC_EOF_NEW"; } >> "$GITHUB_ENV"
+            echo "docs_pr_number=$WD_DOCS_PR_NUMBER" >> "$GITHUB_ENV"
+            echo "docs_pr_url=$WD_DOCS_PR_URL" >> "$GITHUB_ENV"
+            echo "commit_sha=$WD_COMMIT_SHA" >> "$GITHUB_ENV"
+          else
+            { echo "old_spec<<SPEC_EOF_OLD"; printf '%s\n' "$RD_OLD_SPEC"; echo "SPEC_EOF_OLD"; } >> "$GITHUB_ENV"
+            { echo "new_spec<<SPEC_EOF_NEW"; printf '%s\n' "$RD_NEW_SPEC"; echo "SPEC_EOF_NEW"; } >> "$GITHUB_ENV"
+            echo "docs_pr_number=$RD_DOCS_PR_NUMBER" >> "$GITHUB_ENV"
+            echo "docs_pr_url=$RD_DOCS_PR_URL" >> "$GITHUB_ENV"
+            echo "commit_sha=$RD_COMMIT_SHA" >> "$GITHUB_ENV"
+          fi
+
+      - name: Create sync branch
+        id: branch
+        run: |
+          BRANCH="agent/openapi-sync/${docs_pr_number}"
+          git checkout -b "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Write spec diff for the agent to read
+        run: |
+          printf '%s' "$old_spec" > /tmp/old-spec.json
+          printf '%s' "$new_spec" > /tmp/new-spec.json
+          diff -u /tmp/old-spec.json /tmp/new-spec.json > /tmp/spec.diff || true
+
+      - name: Invoke Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            The OpenAPI spec changed:
+              old spec: /tmp/old-spec.json
+              new spec: /tmp/new-spec.json
+              diff:     /tmp/spec.diff
+            Read CLAUDE.md at the repo root for editing, testing, versioning, and changelog rules,
+            then edit the existing SDK source in place to match the new spec. Do not regenerate
+            or rewrite files wholesale. Add tests only where behavior actually changed. Update the
+            version and CHANGELOG.md per CLAUDE.md's rules. Do not run git commands or open a PR —
+            that is handled by later steps in this workflow.
+
+            Also write /tmp/pr-description.md: line 1 is a one-line PR title starting with "sync: "
+            that summarizes the actual change you made (not a generic description). Line 2 is blank.
+            From line 3 onward, a short body describing what changed and why, consistent with your
+            CHANGELOG.md entry.
+          claude_args: |
+            --allowedTools Read,Write,Edit,Glob,Grep
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
+        with:
+          version: '0.10.2'
+
+      - name: Run tests
+        run: |
+          ./scripts/bootstrap
+          ./scripts/lint
+          ./scripts/test
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "sync: update SDK for OpenAPI spec change (docs PR #${docs_pr_number})"
+          git push origin "${{ steps.branch.outputs.branch }}"
+
+      - name: Open PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_TITLE="$(head -n1 /tmp/pr-description.md)"
+          PR_BODY="$(tail -n +3 /tmp/pr-description.md)"
+          gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.branch }}" \
+            --title "$PR_TITLE" \
+            --body "$(printf '%s\n\n---\nAuto-generated in response to docs PR %s (commit %s). Please review before merging.' "$PR_BODY" "$docs_pr_url" "$commit_sha")"
