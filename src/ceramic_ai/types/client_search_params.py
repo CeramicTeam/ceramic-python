@@ -19,3 +19,9 @@ class ClientSearchParams(TypedDict, total=False):
 
     max_description_length: Annotated[int, PropertyInfo(alias="maxDescriptionLength")]
     """Maximum character length for each result's description."""
+
+    debug_trace_id: Annotated[str, PropertyInfo(alias="debugTraceId")]
+    """
+    Opaque identifier used to correlate this request with pipeline validation
+    traces. For debugging purposes only; has no effect on search results.
+    """

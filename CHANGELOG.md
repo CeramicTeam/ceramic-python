@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.5.0 (2026-08-17)
+
+Full Changelog: [v2.4.3...v2.5.0](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.3...v2.5.0)
+
+### Features
+
+* **search:** add optional debug_trace_id parameter
+
 ## 2.4.3 (2026-08-17)
 
 Full Changelog: [v2.4.2...v2.4.3](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.2...v2.4.3)

@@ -175,6 +175,14 @@ def ex_max_description_length_validations() -> None:
             )
 
 
+def ex_debug_trace_id() -> None:
+    client = make_client()
+    expect_ok(
+        "debug_trace_id: accepted",
+        lambda: client.search(query="rate limits and retries", debug_trace_id="smoke-test-trace-1"),
+    )
+
+
 def main() -> None:
     try:
         ex_basic_query()
@@ -182,6 +190,7 @@ def main() -> None:
         ex_query_validation()
         # ex_max_results_validations()
         ex_max_description_length_validations()
+        ex_debug_trace_id()
     except CeramicError as e:
         # This catches SDK configuration issues like missing env var, etc.
         print("\nCeramic SDK error (not an API status error):")

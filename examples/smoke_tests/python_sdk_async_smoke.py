@@ -174,6 +174,14 @@ async def ex_max_description_length_validations() -> None:
             )
 
 
+async def ex_debug_trace_id() -> None:
+    client = make_client()
+    await expect_ok(
+        "debug_trace_id: accepted",
+        lambda: client.search(query="rate limits and retries", debug_trace_id="smoke-test-trace-1"),
+    )
+
+
 async def main() -> None:
     try:
         await ex_basic_query()
@@ -181,6 +189,7 @@ async def main() -> None:
         await ex_query_validation()
         # await ex_max_results_validations()
         await ex_max_description_length_validations()
+        await ex_debug_trace_id()
     except CeramicError as e:
         print("\nCeramic SDK error (not an API status error):")
         print(str(e))

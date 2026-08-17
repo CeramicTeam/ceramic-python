@@ -214,6 +214,7 @@ class Ceramic(SyncAPIClient):
         *,
         query: str,
         max_description_length: int | Omit = omit,
+        debug_trace_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -229,6 +230,9 @@ class Ceramic(SyncAPIClient):
               are separated by spaces; extra whitespace is ignored).
 
           max_description_length: Maximum character length for each result's description.
+
+          debug_trace_id: Opaque identifier used to correlate this request with pipeline validation
+              traces. For debugging purposes only; has no effect on search results.
 
           extra_headers: Send extra headers
 
@@ -246,6 +250,7 @@ class Ceramic(SyncAPIClient):
                 {
                     "query": query,
                     "max_description_length": max_description_length,
+                    "debug_trace_id": debug_trace_id,
                 },
                 client_search_params.ClientSearchParams,
             ),
@@ -444,6 +449,7 @@ class AsyncCeramic(AsyncAPIClient):
         *,
         query: str,
         max_description_length: int | Omit = omit,
+        debug_trace_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -459,6 +465,9 @@ class AsyncCeramic(AsyncAPIClient):
               are separated by spaces; extra whitespace is ignored).
 
           max_description_length: Maximum character length for each result's description.
+
+          debug_trace_id: Opaque identifier used to correlate this request with pipeline validation
+              traces. For debugging purposes only; has no effect on search results.
 
           extra_headers: Send extra headers
 
@@ -477,6 +486,7 @@ class AsyncCeramic(AsyncAPIClient):
                 {
                     "query": query,
                     "max_description_length": max_description_length,
+                    "debug_trace_id": debug_trace_id,
                 },
                 client_search_params.ClientSearchParams,
             ),
