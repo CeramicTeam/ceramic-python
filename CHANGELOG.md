@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.4.2 (2026-08-17)
+
+Full Changelog: [v2.4.1...v2.4.2](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.1...v2.4.2)
+
+### Bug Fixes
+
+* add id-token write permission required by claude-code-action's OIDC exchange ([0309fcd](https://github.com/CeramicTeam/ceramic-python/commit/0309fcd2d19261c766ccaa8ec89fff5641fb6b0f))
+* install uv before running bootstrap/lint/test ([d8e63eb](https://github.com/CeramicTeam/ceramic-python/commit/d8e63ebc7c4edb23c8ba2f8c5f3088d062b56120))
+* repair missing run key in Run tests step, add workflow_dispatch for manual testing ([2a4eb18](https://github.com/CeramicTeam/ceramic-python/commit/2a4eb1806ab5b583e821f3bf67be00ce355cdd88))
+
+
+### Documentation
+
+* clarify Full Changelog link must always be kept, not just commit-link omission ([52215c3](https://github.com/CeramicTeam/ceramic-python/commit/52215c3eeb3a7941e7cbaef1704a444e8406e519))
+
 ## 2.4.1 (2026-08-14)
 
 Full Changelog: [v2.4.0...v2.4.1](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.0...v2.4.1)
