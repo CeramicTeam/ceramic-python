@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.3 (2026-08-17)
+
+Full Changelog: [v2.4.2...v2.4.3](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.2...v2.4.3)
+
+### Bug Fixes
+
+* explicitly authenticate git push in agent-sdk-sync.yml with the workflow token ([3187373](https://github.com/CeramicTeam/ceramic-python/commit/31873737ed7a437bee8083f31c70152646d57f9b))
+
 ## 2.4.2 (2026-08-17)
 
 Full Changelog: [v2.4.1...v2.4.2](https://github.com/CeramicTeam/ceramic-python/compare/v2.4.1...v2.4.2)
