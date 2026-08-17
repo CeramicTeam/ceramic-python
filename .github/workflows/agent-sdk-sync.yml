@@ -115,9 +115,12 @@ jobs:
           ./scripts/test
 
       - name: Commit and push
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
           git add -A
           git commit -m "sync: update SDK for OpenAPI spec change (docs PR #${docs_pr_number})"
           git push origin "${{ steps.branch.outputs.branch }}"
