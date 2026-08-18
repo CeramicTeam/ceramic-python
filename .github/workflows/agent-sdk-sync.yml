@@ -123,16 +123,24 @@ jobs:
           git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
           git add -A
           git commit -m "sync: update SDK for OpenAPI spec change (docs PR #${docs_pr_number})"
-          git push origin "${{ steps.branch.outputs.branch }}"
+          git push --force origin "${{ steps.branch.outputs.branch }}"
 
-      - name: Open PR
+      - name: Open or update PR
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           PR_TITLE="$(head -n1 /tmp/pr-description.md)"
           PR_BODY="$(tail -n +3 /tmp/pr-description.md)"
-          gh pr create \
-            --base main \
-            --head "${{ steps.branch.outputs.branch }}" \
-            --title "$PR_TITLE" \
-            --body "$(printf '%s\n\n---\nAuto-generated in response to docs PR %s (commit %s). Please review before merging.' "$PR_BODY" "$docs_pr_url" "$commit_sha")"
+          FULL_BODY="$(printf '%s\n\n---\nAuto-generated in response to docs PR %s (commit %s). Please review before merging.' "$PR_BODY" "$docs_pr_url" "$commit_sha")"
+
+          EXISTING_PR="$(gh pr list --head "${{ steps.branch.outputs.branch }}" --json number --jq '.[0].number')"
+
+          if [ -n "$EXISTING_PR" ]; then
+            gh pr edit "$EXISTING_PR" --title "$PR_TITLE" --body "$FULL_BODY"
+          else
+            gh pr create \
+              --base main \
+              --head "${{ steps.branch.outputs.branch }}" \
+              --title "$PR_TITLE" \
+              --body "$FULL_BODY"
+          fi
