@@ -59,6 +59,14 @@ def _validate_search_query(query: str) -> None:
             f"Invalid `query`: expected between 1 and 50 words, got {len(words)}."
         )
 
+def _validate_max_results(max_results: int | Omit) -> None:
+    if not is_given(max_results):
+        return
+    if not isinstance(max_results, int) or not 1 <= max_results <= 50:
+        raise CeramicError(
+            f"Invalid `max_results`: expected an integer between 1 and 50, got {max_results}."
+        )
+
 class Ceramic(SyncAPIClient):
     # client options
     api_key: str
@@ -242,6 +250,7 @@ class Ceramic(SyncAPIClient):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         _validate_search_query(query)
+        _validate_max_results(max_results)
 
         return self.post(
             "/search",
@@ -477,6 +486,7 @@ class AsyncCeramic(AsyncAPIClient):
         """
 
         _validate_search_query(query)
+        _validate_max_results(max_results)
 
         return await self.post(
             "/search",

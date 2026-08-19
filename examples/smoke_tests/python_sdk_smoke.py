@@ -135,8 +135,8 @@ def ex_max_results_validations() -> None:
         ("negative",      -1, False),
         ("valid_min",     1,  True),
         ("valid_default", 10, True),
-        ("valid_max",     20, True),
-        ("above_max",     21, False),
+        ("valid_max",     50, True),
+        ("above_max",     51, False),
     ]
 
     for name, mr, is_valid in cases:
@@ -144,13 +144,7 @@ def ex_max_results_validations() -> None:
         if is_valid:
             expect_ok(label, lambda mr=mr: client.search(query="rate limits and retries", max_results=mr))
         else:
-            expect_api_error(
-                label,
-                lambda mr=mr: client.search(query="rate limits and retries", max_results=mr),
-                status=422,
-                code="invalid_parameter",
-                exc=UnprocessableEntityError,
-            )
+            expect_validation_error(label, lambda mr=mr: client.search(query="rate limits and retries", max_results=mr))
 
 def ex_max_description_length_validations() -> None:
     client = make_client()
