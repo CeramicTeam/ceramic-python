@@ -1,4 +1,4 @@
-# This workflow is triggered when a GitHub release is created.
+# This workflow is triggered on push to main, and creates a GitHub Release once publish succeeds.
 # It can also be run manually to re-publish to PyPI in case it failed for some reason.
 # You can run this workflow by navigating to https://www.github.com/CeramicTeam/ceramic-python/actions/workflows/publish-pypi.yml
 name: Publish PyPI
