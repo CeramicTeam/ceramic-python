@@ -1,4 +1,5 @@
 import os
+import sys
 import asyncio
 from typing import Type, Mapping, Callable, Optional, Awaitable, cast
 
@@ -187,6 +188,9 @@ async def main() -> None:
     finally:
         total = test_passed + test_failed
         print(f"\nSummary: ✅ {test_passed} passed, ❌ {test_failed} failed (total {total})")
+
+    if test_failed > 0:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
