@@ -127,29 +127,24 @@ def ex_query_validation() -> None:
     expect_validation_error("query: blank",           lambda: client.search(query="   "))
 
 
-# def ex_max_results_validations() -> None:
-#     client = make_client()
+def ex_max_results_validations() -> None:
+    client = make_client()
 
-#     cases: Iterable[Tuple[str, int, bool]] = [
-#         ("zero", 0, False),
-#         ("negative", -1, False),
-#         ("valid_min", 1, True),
-#         ("valid_default", 10, True),
-#         ("very_large", 100, False),
-#     ]
+    cases = [
+        ("zero",          0,  False),
+        ("negative",      -1, False),
+        ("valid_min",     1,  True),
+        ("valid_default", 10, True),
+        ("valid_max",     50, True),
+        ("above_max",     51, False),
+    ]
 
-#     for name, mr, is_valid in cases:
-#         label = f"max_results validation: {name} (max_results={mr})"
-#         if is_valid:
-#             expect_ok(label, lambda mr=mr: client.search(query="rate limits and retries", max_results=mr))
-#         else:
-#             expect_api_error(
-#                 label,
-#                 lambda mr=mr: client.search(query="rate limits and retries", max_results=mr),
-#                 status=400,
-#                 code="invalid_parameter",
-#                 exc=BadRequestError,
-#             )
+    for name, mr, is_valid in cases:
+        label = f"max_results validation: {name} (max_results={mr})"
+        if is_valid:
+            expect_ok(label, lambda mr=mr: client.search(query="rate limits and retries", max_results=mr))
+        else:
+            expect_validation_error(label, lambda mr=mr: client.search(query="rate limits and retries", max_results=mr))
 
 def ex_max_description_length_validations() -> None:
     client = make_client()
@@ -181,7 +176,7 @@ def main() -> None:
         ex_basic_query()
         ex_invalid_api_key()
         ex_query_validation()
-        # ex_max_results_validations()
+        ex_max_results_validations()
         ex_max_description_length_validations()
     except CeramicError as e:
         # This catches SDK configuration issues like missing env var, etc.

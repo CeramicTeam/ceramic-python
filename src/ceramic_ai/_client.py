@@ -59,6 +59,14 @@ def _validate_search_query(query: str) -> None:
             f"Invalid `query`: expected between 1 and 50 words, got {len(words)}."
         )
 
+def _validate_max_results(max_results: int | Omit) -> None:
+    if not is_given(max_results):
+        return
+    if not 1 <= max_results <= 50:
+        raise CeramicError(
+            f"Invalid `max_results`: expected an integer between 1 and 50, got {max_results}."
+        )
+
 class Ceramic(SyncAPIClient):
     # client options
     api_key: str
@@ -214,6 +222,7 @@ class Ceramic(SyncAPIClient):
         *,
         query: str,
         max_description_length: int | Omit = omit,
+        max_results: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -230,6 +239,8 @@ class Ceramic(SyncAPIClient):
 
           max_description_length: Maximum character length for each result's description.
 
+          max_results: The number of search results to return.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -239,6 +250,7 @@ class Ceramic(SyncAPIClient):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         _validate_search_query(query)
+        _validate_max_results(max_results)
 
         return self.post(
             "/search",
@@ -246,6 +258,7 @@ class Ceramic(SyncAPIClient):
                 {
                     "query": query,
                     "max_description_length": max_description_length,
+                    "max_results": max_results,
                 },
                 client_search_params.ClientSearchParams,
             ),
@@ -444,6 +457,7 @@ class AsyncCeramic(AsyncAPIClient):
         *,
         query: str,
         max_description_length: int | Omit = omit,
+        max_results: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -460,6 +474,8 @@ class AsyncCeramic(AsyncAPIClient):
 
           max_description_length: Maximum character length for each result's description.
 
+          max_results: The number of search results to return.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -470,6 +486,7 @@ class AsyncCeramic(AsyncAPIClient):
         """
 
         _validate_search_query(query)
+        _validate_max_results(max_results)
 
         return await self.post(
             "/search",
@@ -477,6 +494,7 @@ class AsyncCeramic(AsyncAPIClient):
                 {
                     "query": query,
                     "max_description_length": max_description_length,
+                    "max_results": max_results,
                 },
                 client_search_params.ClientSearchParams,
             ),
