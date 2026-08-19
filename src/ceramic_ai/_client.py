@@ -62,7 +62,7 @@ def _validate_search_query(query: str) -> None:
 def _validate_max_results(max_results: int | Omit) -> None:
     if not is_given(max_results):
         return
-    if not isinstance(max_results, int) or not 1 <= max_results <= 50:
+    if not 1 <= max_results <= 50:
         raise CeramicError(
             f"Invalid `max_results`: expected an integer between 1 and 50, got {max_results}."
         )
